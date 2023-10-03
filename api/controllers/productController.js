@@ -1,8 +1,8 @@
-const product = require("../models/productModel");
+const productModal = require("../models/productModel");
 
 exports.getAllProduct = async (req, res) => {
   try {
-    const products = await product.find();
+    const products = await productModal.find();
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -10,9 +10,10 @@ exports.getAllProduct = async (req, res) => {
 };
 
 exports.createOneProduct = async (req, res) => {
-  const { productName, price, img } = req.body;
+  const { productName, productPrice, productImg } = req.body;
   try {
-    const product = new product({ productName, price, img });
+    console.log(req.body);
+    const product = new productModal({ productName, productPrice, productImg });
     await product.save();
     res.status(201).json(product);
   } catch (error) {
@@ -24,7 +25,7 @@ exports.updateOneProduct = async (req, res) => {
   const { id } = req.params;
   const { productName, price, img } = req.body;
   try {
-    const product = await product.findByIdAndUpdate(
+    const product = await productModal.findByIdAndUpdate(
       id,
       { productName, price, img },
       { new: true }
@@ -41,7 +42,7 @@ exports.updateOneProduct = async (req, res) => {
 exports.deleteOneProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await product.findByIdAndRemove(id);
+    const product = await productModal.findByIdAndRemove(id);
     if (!product) {
       return res.status(404).json({ error: "Không tìm thấy sản phẩm" });
     }
