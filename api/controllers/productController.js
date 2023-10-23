@@ -23,11 +23,11 @@ exports.createOneProduct = async (req, res) => {
 
 exports.updateOneProduct = async (req, res) => {
   const { id } = req.params;
-  const { productName, price, img } = req.body;
+  const { productName, productPrice, productImg } = req.body;
   try {
     const product = await productModal.findByIdAndUpdate(
       id,
-      { productName, price, img },
+      { productName, productPrice, productImg },
       { new: true }
     );
     if (!product) {
